@@ -22,6 +22,7 @@ brain morphology by MRI,
 and maturation of visual neural circuitry by EEG
 (Bonham et al., 2023; Bonham et al., 2025).
 
+// more on the application of ecology here. Press/pulse
 While that work described relationships along this trajectory,
 it does not explain how host development should affect microbial succession.
 Age predicts the microbiome remarkably well in this time window,
@@ -37,7 +38,7 @@ and cessation of breast milk accelerated maturation (Stewart et al., 2018).
 
 Weaning changes the gut's resource supply along two axes at once,
 and the distinction between them is the conceptual center of this proposal.
-The first axis is **intrinsic** (supplied by the host).
+The first axis is *intrinsic* (supplied by the host).
 Human milk oligosaccharides (HMOs) are indigestible by the infant
 and are instead metabolized by a small set of adapted microbes,
 most notably _Bifidobacterium longum_ subsp. _infantis_.
@@ -45,7 +46,7 @@ In other words, they are an evolved mechanism
 by which mothers feed their infant's microbiome,
 and their metabolic cost is strong evidence that selection
 has acted on the composition of the infant gut community.
-The second axis is **extrinsic** (supplied by diet).
+The second axis is *extrinsic* (supplied by diet).
 Solid foods introduce plant polysaccharides,
 and dietary fiber is among the most powerful known modulators
 of gut community composition at every age.
@@ -66,10 +67,10 @@ with a different set of beneficiaries,
 in competition with the arriving dietary resource.
 
 Early life contains three ecologically distinct regimes.
-The first is **assembly**, from birth through roughly the first month,
+The first is *assembly*, from birth through roughly the first month,
 when a near-empty gut is colonized under conditions of high turnover and strong priority effects.
-The second is a **milk-adapted quasi-stable state**.
-The third is the **weaning press**, when the resource base changes permanently.
+The second is a *milk-adapted quasi-stable state*.
+The third is the *weaning press*, when the resource base changes permanently.
 These are not the same kind of problem.
 Assembly cannot be framed as a perturbation because there is no established community to perturb,
 and it is sparsely sampled in nearly every existing cohort.
@@ -80,7 +81,7 @@ and I address it here.
 
 == 2. Gap and hypothesis
 
-**Key gap:** Existing models of infant microbiome development are indexed on chronological age.
+*Key gap:* Existing models of infant microbiome development are indexed on chronological age.
 Whether they are machine-learning age predictors (Fahur Bottino et al., 2025; Subramanian et al., 2014)
 or the recent generation of probabilistic longitudinal models that treat covariates
 as smooth modulators of a time trend (Cheng et al., 2019; Yuan et al., 2026),
@@ -92,18 +93,18 @@ No framework indexes succession on the perturbation itself,
 and as a consequence we have no quantitative description of how the infant gut responds to the defining ecological event of early life,
 nor of what the host contributes to the community that emerges from it.
 
-**The long-term goal of this project is to understand early-life microbial succession
+*The long-term goal of this project is to understand early-life microbial succession
 as a sequence of responses to environmental perturbation,
-rather than as an autonomous developmental clock.**
+rather than as an autonomous developmental clock.*
 The immediate objective is to use the weaning transition as a natural experiment
 to characterize how the gut ecosystem responds to a permanent change in its resource supply,
 and to determine how that response is divided between host-provided and diet-provided resources.
 
-**I hypothesize that the introduction of solid food acts as a press perturbation on the infant gut ecosystem;
+*I hypothesize that the introduction of solid food acts as a press perturbation on the infant gut ecosystem;
 that the timing, magnitude, and resolution of the community's response
 explains early-life succession better than chronological age does;
 and that host glycan provisioning does not cease at weaning but switches substrate from milk oligosaccharides to mucin,
-where it competes with dietary fiber to shape the emerging community.**
+where it competes with dietary fiber to shape the emerging community.*
 
 Ecologists distinguish a *press* perturbation, a permanent change in conditions that moves a community to a new equilibrium,
 from a *pulse*, a transient disturbance from which a community may return (Bender et al., 1984).
@@ -121,10 +122,12 @@ That natural variation decorrelates the two clocks and makes their effects separ
 
 == 3. Research strategy
 
-I have roughly 4,000 shotgun metagenomes from the first three years of life in hand.
+My colleagues and I have assembled a databases of over 4,000 shotgun metagenomes
+from children in the first three years.
 These include the twelve-country dataset from Fahur Bottino et al. (2025),
-the Cape Town and Malawi arms of the Khula cohort,
-and about 400 samples from 300 children in a cohort contrasting Old Order Mennonite and urban Rochester families.
+additional samples from the Cape Town and Malawi arms of the Khula cohort,
+and nearly 400 samples from 300 children in a cohort
+contrasting Old Order Mennonite or urban/suburban Rochester families.
 Feeding status is recorded for most participants, though coarsely:
 exclusive breastfeeding, exclusive formula, or mixed, and solid foods yes or no.
 I restrict this work to shotgun metagenomes,
@@ -139,7 +142,7 @@ into an age component and a transition-response component
 and compare their explanatory power.
 For infant *i* and taxon *j*, I will model the latent log-ratio abundance as
 
-$η_ij(t) = f_j(t) + g_j(t − w_i) + b_ij + ε_ij(t)$
+$η_{i,j}(t) = f_j(t) + g_j(t − w_i) + b_{i,j} + ε_{i,j}(t)$
 
 where $t$ is chronological age,
 $w_i$ is the child's weaning time,
@@ -190,10 +193,10 @@ They set the geometry;
 they do not do the inference.
 
 Within that geometry, I will estimate from the event-aligned models of Aim 1 a set of ecological quantities that have not been measured for this transition:
-the **displacement** (how far the community moves),
-the **relaxation time** (how long until it settles into a new quasi-stationary state),
-the **transient variance** (whether between-infant variability rises during the transition, indicating a window of reduced stability),
-and the **dependence of the endpoint on the starting state**
+the *displacement* (how far the community moves),
+the *relaxation time* (how long until it settles into a new quasi-stationary state),
+the *transient variance* (whether between-infant variability rises during the transition, indicating a window of reduced stability),
+and the *dependence of the endpoint on the starting state*
 (whether the pre-weaning community predicts the post-weaning one,
 which would indicate priority effects and would link the assembly period to the weaning outcome without requiring dense sampling of assembly itself).
 
@@ -230,7 +233,8 @@ To determine how the intrinsic and extrinsic axes compete, I will compare their 
 This yields a prediction that would explain our own prior result.
 The host-provided resource is universal;
 the dietary resource is not.
-If host provisioning is doing real work after weaning, then host-glycan foraging capacity should be **more conserved across the twelve-country dataset and across the Mennonite, Rochester, Cape Town, and Malawi contrasts**
+If host provisioning is doing real work after weaning,
+then host-glycan foraging capacity should be *more conserved across the twelve-country dataset and across the Mennonite, Rochester, Cape Town, and Malawi contrasts*
 than plant-glycan foraging capacity, which should track diet and geography.
 Under this hypothesis, the universality of succession that we reported in 2025 is carried by the host-provisioned component,
 and the variability by the dietary one.
