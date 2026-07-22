@@ -201,117 +201,253 @@ Per-individual sampling is sparse,
 so all analyses estimate population-level dynamics
 by pooling across children rather than fitting dynamical systems to single infants.
 
-=== Aim 1. A press-perturbation model of early life microbiome composition
+== Aim 1: A two-press perturbation model of normative infant microbiome succession
 
-To determine which axis organizes succession,
-I will fit models that decompose microbial composition
-into an age component and a transition-response component
-and compare their explanatory power.
-For infant *i* and taxon *j*, I will model the latent log-ratio abundance as
+Weaning consists of two mechanistically distinct events that are typically concurrent
+but represent distinct perturbations;
+(1) the cessation of breastmilk withdraws HMOs and other intrinsic, host-provided resources,
+(2) and the introduction of solid food provides provides new extrinsic resources such as plant fiber.
+Differences in infant feeding practices provide natural experiments
+that will enable modeling succession as the response to these two presses.
+For example, infants that switch from bresatfeeding to formula prior to the introduction
+of solid food dramatically reduce HMO consumption without increasing plant fiber.
+Infants that wean from exclusive formula feeding have the added dietary fiber
+without a major loss in HMOs (since they have a reduced quantity to begin with).
 
-$ η_"ij"(t) = f_j(t) + g_j(t − w_i) + b_"ij" + ε_"ij"(t) $
+My #underline([central hypothesis]) is that time relative to each press
+explains normative taxonomic succession better than chronological age does,
+and that the two presses have distinct taxonomic signatures.
+To determine whether succession is organized by age or by response to the presses,
+I will fit models that decompose composition into an age component
+and two transition-response components and compare their explanatory power.
+For infant $i$ and taxon $j$, I will model the latent log-ratio abundance as
+
+$ eta_(i j)(t) = f_j(t) + h_i(t) dot c_j + g_j^"milk"(t - m_i) + g_j^"solid"(t - s_i) + b_(i j) + epsilon_(i j)(t) $
 
 where $t$ is chronological age,
-$w_i$ is the child's weaning time,
+$h_i (t) in [0, 1]$ is the breastmilk fraction of the infant's feeds over time
+(one for exclusive breastfeeding, zero for exclusive formula, intermediate for mixed),
+$m_i$ and $s_i$ are the infant's milk-cessation and solid-introduction times,
 $f_j$ is a shared function of age,
-$g_j$ is a shared function of time relative to the transition,
-and $b_"ij"$ is a subject-level random effect.
-In plain language: the first term asks how much of a taxon's behavior is explained by how old the child is,
-and the second asks how much is explained by how long it has been since that child started solid food.
-Because $w_i$ varies across children, the two terms are not collinear and their contributions can be separated.
-I will implement these as additive Gaussian processes over the two time axes with a compositional (logistic-normal multinomial) observation model,
-which handles irregular sampling, the sum-to-one constraint, and the uncertainty that linear models on this data type do not.
+$c_j$ is the taxon's response to intrinsic-resource level,
+$g_j^"milk"$ and $g_j^"solid"$ are shared functions of time relative to each press,
+and $b_(i j)$ is a subject-level random effect.
+In plain language, the first term asks how much of a taxon's behavior is explained
+by how old the child is; the $h_i (t) dot c_j$ term captures how the milk-adapted community
+is shaped by ongoing exposure to human milk oligosaccharides,
+which distinguishes breastfed from formula-fed infants before any weaning;
+and the last two ask how much is explained by
+how long it has been since that child stopped milk and started solids.
+Because the milk-cessation press withdraws a resource the infant must first have received,
+$g_j^"milk"$ is gated by prior breastmilk exposure:
+it has nothing to act on in an infant fed formula from birth,
+whose $h_i (t)$ is zero throughout,
+and its amplitude scales with the exposure that precedes it.
+An infant who switches from exclusive breastmilk to formula without starting solids
+is therefore represented within the same model as a decline in $h_i (t)$
+that isolates the withdrawal of human milk oligosaccharides
+from the introduction of fiber.
+I will implement the shared functions as additive Gaussian processes over each time axis
+@chengAdditiveGaussianProcess2019
+with a compositional observation model that maps the latent $eta$ to observed counts,
+so that the sum-to-one constraint, irregular sampling, and measurement uncertainty
+are handled directly rather than through _ad hoc_ transformation
+[CITE: logistic-normal multinomial / Aitchison compositional model].
 Under the clock hypothesis, $f$ dominates.
-Under the perturbation-response hypothesis, $g$ dominates.
+Under the perturbation-response hypothesis,
+the exposure and press terms dominate.
+I will quantify each component's contribution by variance attribution
+@yuanLGTMGaussianProcess
+and compare the age-only, two-press, and press-only models
+by held-out predictive performance.
 
-The weaning transition bundles two events that are not identical.
-Withdrawal of milk removes the resource sustaining HMO specialists;
-arrival of solid food supplies plant polysaccharides.
-TEDDY suggests the former is the stronger driver.
-Our metadata records breastfeeding status and solid food introduction separately,
-and where their timing differs across children I will fit each as its own event axis and compare.
+*Weaning is a transition, not a step.*
+Breastfeeding is typically reduced over weeks to months rather than stopped at once.
+Where cohorts record feeding intensity across visits
+(exclusive, then partial, then none),
+I will model each $g$ as a smooth response with a latent onset _and_ a duration,
+so that the ramp is estimated rather than assumed instantaneous.
+Where only a binary flag is recorded, the model recovers onset bounds but not duration,
+and I will report the resulting resolution limit rather than over-interpret it.
 
-*Expected outcome:* a quantitative answer to whether age or transition better explains succession,
-and a shared response function describing the average trajectory of each major taxon relative to the transition.
-A complementary effort to build an individual-level "microbiome age" instrument is ongoing in the group of my former trainee, Guilherme Fahur Bottino.
-Nothing here depends on that instrument,
-and I will adopt it if it proves fit for purpose rather than duplicate it.
+*The transition times are latent, and inferring them is the core of the method.*
+Most cohorts do not record the exact date of milk cessation or solid introduction.
+They record, at each visit, whether each has yet occurred.
+Because the flags are monotone, each event is interval-censored:
+it lies between the last visit flagged "no" and the first flagged "yes".
+Substituting the interval midpoint would inject error into the covariate
+and bias the model toward the age explanation for a methodological reason.
+To determine each infant's transition times,
+I will treat $m_i$ and $s_i$ as latent variables,
+place priors on them drawn from the population distribution of weaning times
+and truncated to each infant's observed censoring interval,
+and infer them jointly with $f$, $g^"milk"$, and $g^"solid"$.
+This is identifiable because each $g$ is shared across all infants
+and estimated from thousands of samples,
+while each transition time is a single scalar constrained by hard bounds.
+Infants whose sampling brackets a transition tightly pin down the alignment of $g$,
+and that shared $g$ then localizes the transition for infants sampled more sparsely.
 
-=== Aim 2. Determine the geometry and dynamics of the weaning press.
+This design turns the coarse metadata into the sharpest available test of the hypothesis.
+If succession is a response to the presses,
+composition must carry information about how long it has been since each one,
+and the model should date the transitions from composition alone
+more precisely than the censoring interval allows.
+An age clock has no reason to do this.
+// This is the falsification criterion.
+If the model cannot localize the transition times within their intervals
+better than the prior, that is evidence against the hypothesis, not a technical failure,
+and I will report it as such.
+I will validate the inference by simulation-based calibration
+[CITE: simulation-based calibration, Talts et al. 2018]
+and by holding out tightly bracketed infants, hiding their bounds, and testing recovery.
 
-Describing a perturbation as a displacement presumes we know the shape of the space the community moves through.
-That shape is not established.
-The community-state literature assumes discrete states;
-the critiques of enterotypes argue for a continuum.
-The question is decidable,
-and it determines which description of perturbation is even meaningful.
+*Separating the two presses depends on infants in whom they dissociate.*
+The two response functions can be told apart only because milk cessation and
+solid introduction do not always coincide.
+Early formula-switchers and infants with extended breastfeeding alongside early solids
+provide the discordant timing that powers the separation.
+Whether the data can support a two-press model is therefore an empirical question
+I can answer before fitting:
+I will quantify, across the roughly 4,000 metagenomes in hand,
+how many infants have discordant transition timing.
+// Feasibility check; belongs in preliminary data.
+If the great majority wean both axes together near six months,
+I will report the two-press model as identifiable only for the taxa with the
+strongest signals and fall back to a single weaning press for the remainder.
 
-To determine whether the space of infant community states is continuous or branched, I will apply topological data analysis to the full collection of metagenomes.
-Persistent homology in degree zero measures whether the point cloud of community states separates into components that persist across a range of scales,
-giving a threshold-free test for discrete states rather than an imposed clustering.
-Mapper produces a graph summary of the same point cloud,
-and is well suited to detecting branch points,
-where a set of pre-weaning trajectories splits into distinct post-weaning configurations.
-I will use these as a structural description that the probabilistic models of Aim 1 then do inference within.
-I am explicit that topological methods here are descriptive,
-are sensitive to the choice of metric (I will use Aitchison distance, appropriate for compositional data, and test sensitivity to alternatives),
-and provide no calibrated uncertainty.
-They set the geometry;
-they do not do the inference.
+#block(stroke: 0.5pt, inset: 8pt, radius: 3pt)[
+*Prospective validation (pilot).*
+The retrospective cohorts contain the timing dissociation but not dense sampling
+through the transition, nor direct measurement of HMO and fiber intake.
+To ground-truth the latent-transition inference and to resolve the weaning ramp,
+I will run a small pilot cohort with the Friedman School of Nutrition Science and Policy,
+sampled monthly through the weaning window, with dietary assessment
+and quantification of milk and fecal glycans.
+This component calibrates the computational model and seeds a future dedicated study.
+It is deliberately modest and is not the evidence on which the aim's conclusions rest,
+since its sampling matures late in the award period.
+]
 
-Within that geometry, I will estimate from the event-aligned models of Aim 1 a set of ecological quantities that have not been measured for this transition:
-the *displacement* (how far the community moves),
-the *relaxation time* (how long until it settles into a new quasi-stationary state),
-the *transient variance* (whether between-infant variability rises during the transition, indicating a window of reduced stability),
-and the *dependence of the endpoint on the starting state*
-(whether the pre-weaning community predicts the post-weaning one,
-which would indicate priority effects and would link the assembly period to the weaning outcome without requiring dense sampling of assembly itself).
+*Expected outcomes.*
+A quantitative answer to whether age or the presses better explain succession,
+a shared response function for each major taxon relative to each press,
+and a calibrated method for placing an individual infant on the succession trajectory
+from sparse samples.
 
-I will test whether these quantities generalize by contrasting populations that differ in the extrinsic resource.
-The Old Order Mennonite and urban Rochester comparison holds geography relatively constant
-while varying diet, farm exposure, and family structure.
-The Malawi and Cape Town arms of Khula differ in diet and environment against a shared study design.
-If the weaning press has a common structure, the response function should be recognizable across all of them,
-with the dietary axis modulating its endpoint.
+*Potential problems and alternatives.*
+If milk cessation and solid introduction prove statistically inseparable in this dataset,
+the single-press model remains valid and still improves on the age clock.
+If the compositional model is computationally prohibitive at this sample size,
+I will use a basis-function approximation to the Gaussian process
+[CITE: Hilbert-space reduced-rank GP approximation],
+which scales linearly in the number of samples and is the approach taken by
+recent longitudinal microbiome models @yuanLGTMGaussianProcess.
 
-*Risk and limitation:* our per-individual sampling density does not support fitting per-child dynamical models,
-and I do not propose to.
-Estimates of relaxation time and transient variance will be population-level and pooled,
-and their resolution is bounded by sampling interval.
-If the transition is faster than we can resolve, I will report the bound rather than over-interpret,
-and a response faster than months would itself be an informative result.
+== Aim 2: Glycan utilization as the mediator of the compositional response
 
-=== Aim 3. Determine whether host provisioning of the microbiome persists across weaning, and how it competes with dietary fiber.
+Aim 1 describes _what_ happens to the community at each press.
+Aim 2 tests _why_, at the level of the resource each press changes.
+The presses are defined by glycans:
+milk cessation withdraws HMOs, and solid food adds plant fiber.
+If these resources drive the compositional response,
+then the community's glycan-foraging gene content should change with each press
+in a substrate-specific way, and should do so whether or not the carrying taxa persist.
+Because the dietary metadata is too coarse to quantify intake,
+I will read the resource environment off the community's own gene content,
+which is a more direct measure of what the community can consume than any questionnaire.
 
-Our dietary metadata is too coarse to quantify fiber intake.
-I will therefore read the resource environment off the community itself.
-Carbohydrate-active enzyme repertoires distinguish the two axes directly:
-host and milk glycan foraging is carried by GH33 sialidases, GH29 and GH95 fucosidases, GH2 beta-galactosidases, and GH20 hexosaminidases,
-while plant polysaccharide foraging is carried by families including GH5 and GH9 cellulases, GH10 and GH11 xylanases, GH51 arabinofuranosidases, and pectate lyases.
-The functional profile is a more direct measure of what the community is eating than any questionnaire.
+*Hypothesis.*
+I hypothesize that the compositional response to each press is mediated by the change
+in its corresponding glycan resource,
+and specifically that host glycan provisioning does not cease at milk withdrawal
+but switches substrate from milk oligosaccharides to mucin,
+where it competes with dietary fiber to shape the emerging community.
 
-To determine whether host provisioning persists, I will test whether taxonomic turnover across weaning exceeds functional turnover in host-glycan foraging genes.
-If the host continues to feed its microbiome through mucin, the glycan-foraging capacity should outlive the taxa that carried it before the transition.
-Specifically, HMO specialists that cannot use mucin (*B. longum* subsp. *infantis*, which lacks the necessary transporters) should decline steeply,
-while taxa capable of both (*B. bifidum*, *Bacteroides* spp., *A. muciniphila*) should persist or increase,
-and the aggregate abundance of host-glycan enzyme families should fall considerably less than the abundance of the pre-weaning taxa carrying them.
+*Approach.*
+I will partition the carbohydrate-active enzyme (CAZyme) repertoire quantified
+from the metagenomes into a host- and milk-glycan module
+(including GH33 sialidases, GH29 and GH95 fucosidases, GH2 beta-galactosidases,
+and GH20 hexosaminidases)
+and a plant-glycan module
+(including GH5 and GH9 cellulases, GH10 and GH11 xylanases,
+GH51 arabinofuranosidases, and pectate lyases),
+using the family assignments from a versioned annotation
+[CITE: dbCAN / CAZy database].
+HMOs and mucin O-glycans are built from the same monosaccharides
+and are degraded by overlapping enzyme families
+@tailfordMucinGlycanForaging2015 [CITE: Shuoker et al. 2023, mucin sialidases/fucosidases],
+which is what makes a substrate switch from milk to mucin possible for some taxa
+but not others.
 
-To determine how the intrinsic and extrinsic axes compete, I will compare their conservation across populations.
-This yields a prediction that would explain our own prior result.
-The host-provided resource is universal;
-the dietary resource is not.
-If host provisioning is doing real work after weaning,
-then host-glycan foraging capacity should be *more conserved across the twelve-country dataset and across the Mennonite, Rochester, Cape Town, and Malawi contrasts*
-than plant-glycan foraging capacity, which should track diet and geography.
-Under this hypothesis, the universality of succession that we reported in 2025 is carried by the host-provisioned component,
-and the variability by the dietary one.
-This is directly testable by partitioning the variance in each functional module across populations.
+To determine whether each press acts through its own glycan resource,
+I will align each functional module to each press using the transition times from Aim 1
+and test whether the host-glycan module responds to milk cessation
+and the plant-glycan module responds to solid introduction.
 
-*Expected outcome:* evidence for or against the proposition that the host's evolved investment in feeding its microbiome extends past infancy.
-A positive result identifies mucin glycan foraging as a persistent host lever on community composition and a plausible intervention target.
-A negative result, in which host-glycan capacity collapses with the taxa that carried it, is equally informative,
-and would mean the post-weaning community is governed principally by diet.
+To determine whether host provisioning persists across milk withdrawal,
+I will test whether taxonomic turnover across the milk-cessation press
+exceeds functional turnover in the host-glycan module.
+If the host continues to feed its microbiome through mucin,
+host-glycan foraging capacity should outlive the taxa that carried it before the press.
+The stratified output of the functional profiler makes this directly observable:
+I can follow a host-glycan family's total abundance across the press
+while its taxonomic contributors switch from _Bifidobacterium longum_ subsp. _infantis_,
+which lacks the transporters to use mucin
+[CITE: B. infantis mucin transporter deficiency],
+to mucin-competent taxa such as _Bacteroides_ and _Akkermansia muciniphila_
+@berkhoutMilkMucinGlycans2025.
+Function persisting while the taxa carrying it turn over is the mediation result
+in a single view.
 
+*Natural experiments dissociate the two resources.*
+The strongest test comes from infants in whom the two presses are decoupled.
+Infants who switch from exclusive breastmilk to formula experience
+withdrawal of HMOs without the addition of fiber.
+I predict that in these infants the host-glycan module falls
+while the plant-glycan module is unchanged,
+and that composition shifts partway toward the post-weaning state.
+Infants who begin solids while breastfeeding continues experience
+the addition of fiber without withdrawal of HMOs,
+and I predict the mirror-image response.
+// This is the causal handle that links Aim 2 back to the two-press design in Aim 1.
+I will use these subgroups to test whether each resource change moves
+glycan-foraging capacity and composition in the predicted, dissociable directions.
+The main confound is that some modern formulas are supplemented with HMOs
+such as 2'-fucosyllactose [CITE: HMO-supplemented infant formula],
+so I will restrict this analysis to infants whose formula composition is known
+or predates widespread supplementation, and treat formula as an imperfect instrument.
+
+*A cross-population prediction that would explain our prior result.*
+The host-provided resource is universal; the dietary resource is not.
+If host provisioning does real work after weaning,
+host-glycan foraging capacity should be more conserved across populations
+than plant-glycan capacity, which should track local diet.
+To test this, I will partition the variance in each functional module across
+the twelve-country dataset and the Mennonite, Rochester, Cape Town, and Malawi contrasts,
+comparing on a fair-footing statistic rather than raw variance,
+since the two modules differ in size and prevalence.
+Under this hypothesis, the universality of succession we reported
+@fahurbottinoEarlyLifeMicrobial2025 is carried by what the host provides,
+and its variability by what the child eats.
+
+*Expected outcomes.*
+Evidence for or against the proposition that host glycan provisioning persists past weaning,
+identification of the enzyme families and taxa that mediate each press,
+and a test of whether the two presses act through their respective glycan resources.
+
+*Potential problems and alternatives.*
+A negative result, in which host-glycan capacity collapses along with its carrying taxa,
+is equally informative and would indicate that the post-weaning community is governed
+principally by diet rather than by continued host provisioning.
+If gene-family resolution proves too coarse to separate the modules cleanly,
+I will refine the assignment to the substrate-specific enzyme and transporter genes
+with the least cross-substrate ambiguity,
+at the cost of coverage.
+Functional profiling from short-read metagenomes assigns capacity, not expression,
+and I will state this limit explicitly;
+metatranscriptomics or targeted assays in the pilot cohort of Aim 1 could address it
+in future work.
 == Future directions
 
 Two limitations of the existing data define the next phase of this program,
