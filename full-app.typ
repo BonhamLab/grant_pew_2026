@@ -1,56 +1,75 @@
+#set page(paper:"us-letter", margin:1in, numbering: "1")
+//double spacing
+#set text(12pt, top-edge: 0.7em, bottom-edge: -0.3em)
+#set par(leading: 1em, first-line-indent: 2em)
 
-
-== 1. Background and significance
+== Background and significance
 
 The gut microbiome assembles over the first years of life
 through a chaotic but predictable ecological succession.
 Pioneer colonizers arrive at birth,
-expand under the selective pressure of a milk diet,
+expand under the selective pressure of a liquid diet (milk or forumla),
 and are progressively replaced by a more diverse, adult-like community.
 Disruptions to this process have been linked
 to immune, metabolic, and neurodevelopmental outcomes that
 persist well beyond infancy.
-My previous work has sought to investigate both ends of this picture.
+My previous work has sought to understand
+how the composition of the infant microbiome affects host development.
 We showed that succession follows conserved patterns
 across 1,827 infants from 12 countries,
 consistent enough that microbial composition alone predicts a child's age
-to within about 2.5 months (Fahur Bottino et al., 2025).
-We also showed that the species present in the first six months of life,
-and the neuroactive gene products they encode,
-are associated with cognitive scores,
+to within about 2.5 months
+@fahurbottinoEarlyLifeMicrobial2025.
+We also showed that the species present in the first six months of life
+and the neuroactive gene products they encode
+are associated with cognitive development,
 brain morphology by MRI,
 and maturation of visual neural circuitry by EEG
-(Bonham et al., 2023; Bonham et al., 2025).
+@bonhamGutresidentMicroorganismsTheir2023
+@bonhamCodevelopmentGutMicrobial2025.
+There is also clear evolutionary evidence that the early microbiome
+is important for infant health;
+a major component of human breastmilk,
+human milk oligosaccharides (HMOs),
+are not digestible by infants themselves, but are instead
+prebiotic food for a small set of adapted microbes.
 
-// more on the application of ecology here. Press/pulse
-While that work described relationships along this trajectory,
-it does not explain how host development should affect microbial succession.
-Age predicts the microbiome remarkably well in this time window,
-and a one-year-old differs from a three-month-old in many ecologically-relevant ways
-including gut pH, immune tone, transit time, and mucosal secretions.
-However, the strongest candidate for the engine of succession
+Despite this clear importance,
+attempts to understand the relationships between microbiome composition
+in the first year of list and host development
+remain beset by the persistent challenge that
+the microbial population itself is in constant flux during this period.
+Though we showed that age predicts the microbiome remarkably well,
+the performance of our models were in large part driven
+by a single extreme shift in composition that occurs around six months of age.
+// Add figure w/proportion of taxa present at 3 months that are still present at 1 year
+// Or: curves of most age-specific taxa
+A one-year-old differs from a three-month-old in many ecologically-relevant ways
+including gut pH, immune tone, transit time, mucosal secretions,
+and most crucially, diet.
+The strongest candidate for the engine of change
 is a specific, near-universal environmental event,
 namely the end of exclusive milk feeding and the introduction of solid food.
 Indeed,  in the TEDDY cohort,
 receipt of breast milk was the single largest factor
-associated with microbiome structure,
-and cessation of breast milk accelerated maturation (Stewart et al., 2018).
+associated with microbiome structure
+and cessation of breast milk accelerated maturation
+@stewartTemporalDevelopmentGut2018.
+Essentially none of the microbes that dominate a milk-fed microbiome
+are present in the solid-food microbiome and vise versa (@fig-milkprepost).
+As a consequence, longitudinal models of the microbiome that treat
+composition as linear or even monotonic without accounting
+for this profound ecological shift are hopelessly incomplete.
 
-Weaning changes the gut's resource supply along two axes at once,
-and the distinction between them is the conceptual center of this proposal.
-The first axis is *intrinsic* (supplied by the host).
-Human milk oligosaccharides (HMOs) are indigestible by the infant
-and are instead metabolized by a small set of adapted microbes,
-most notably _Bifidobacterium longum_ subsp. _infantis_.
-In other words, they are an evolved mechanism
-by which mothers feed their infant's microbiome,
-and their metabolic cost is strong evidence that selection
-has acted on the composition of the infant gut community.
-The second axis is *extrinsic* (supplied by diet).
+#figure([])<fig-milkprepost>
+
+Weaning changes the gut's resource supply along two axes:
+(1) the *intrinsic* (supplied by the host species) provisioning of HMOs and
+(2) *extrinsic* (supplied by diet).
 Solid foods introduce plant polysaccharides,
 and dietary fiber is among the most powerful known modulators
-of gut community composition at every age.
-
+of gut community composition at every age
+@makkiImpactDietaryFiber2018.
 At weaning, the intrinsic resource appears to be withdrawn
 and the extrinsic resource arrives.
 But the host does not stop feeding its microbiome.
@@ -58,97 +77,145 @@ Mucin O-glycans are secreted into the gut throughout life,
 are built from the same monosaccharides as HMOs
 (fucose, sialic acid, galactose, N-acetylglucosamine) in similar linkages,
 and are degraded by overlapping bacterial enzyme families including GH33 sialidases,
-GH29 and GH95 fucosidases, and GH2 beta-galactosidases (Kelly et al., 2023).
-_Akkermansia muciniphila_, a mucin specialist, grows on HMOs.
-_Bacteroides_ species induce the same gene sets for both substrates.
-_B. infantis_, by contrast, lacks the transporters to use mucin at all.
+GH29 and GH95 fucosidases, and GH2 beta-galactosidases
+@tailfordMucinGlycanForaging2015.
+_Akkermansia muciniphila_, a mucin specialist, can grow on HMOs
+but is out-competed when HMO specialists are present
+@berkhoutMilkMucinGlycans2025.
+Many _Bacteroides_ species contain gene sets for both substrates.
+_Bifidobacterium longum_ subsp. _infantis_, the most adept HMO utilizer,
+lacks the transporters to use mucin at all.
 Host provisioning may therefore continue past weaning by a different route,
 with a different set of beneficiaries,
-in competition with the arriving dietary resource.
+shaping the ecology of succession and
+the resulting composition of the gut into adulthood.
 
-Early life contains three ecologically distinct regimes.
-The first is *assembly*, from birth through roughly the first month,
-when a near-empty gut is colonized under conditions of high turnover and strong priority effects.
-The second is a *milk-adapted quasi-stable state*.
-The third is the *weaning press*, when the resource base changes permanently.
-These are not the same kind of problem.
-Assembly cannot be framed as a perturbation because there is no established community to perturb,
-and it is sparsely sampled in nearly every existing cohort.
-The weaning transition, by contrast, is well sampled, has a recorded date in most cohorts,
-and is the point at which individual trajectories most plausibly begin to diverge.
-It is the tractable entry point,
-and I address it here.
+Ecologists distinguish a "press perturbation",
+a permanent change in conditions that moves a community to a new equilibrium,
+from a "pulse perturbation", a transient disturbance from which a community may return
+@benderPerturbationExperimentsCommunity1984.
+Where the microbiome literature treats perturbations at all,
+it tends to treat all exposures alike.
+Weaning is an archetypal press:
+the resource that sustained the pioneer community is withdrawn and does not return,
+while at the same time new resources (and news sources of dispersal) are introduced.
+Other clinically relevant press perturbations such as the onset of chronic disease
+or long-term treatments such as statins or GLP-1 drugs
+may alter metabolism and immune posture in ways that 
+affect gut microbial composition
+@maierExtensiveImpactNonantibiotic2018
+@thompsonAlterationsGutMicrobiome2023,
+but modeling these effects is substantially more challenging,
+since microbes may be both cause and effect,
+effects of the perturbation are less dramatic 
+and take place over a longer time period,
+and treatments and diseases may confound one another in the signal.
+Antibiotics and acute illness are examples of pulse perturbations,
+and may also benefit from an ecological lens,
+but are beyond the scope of this proposal.
 
-== 2. Gap and hypothesis
+My #underline([_long term goal_]) is to understand the changing early-life
+microbiome in ecological terms,
+and use that understanding to investigate the interactions between
+microbiome composition and child development.
+My #underline[_overall objectives_] for this proposal are to
+develop a press-perturbation model of infant microbiome development,
+and to apply it to model changes in taxonomic and gene-functional composition,
+particularly of carbohydrate-active enzymes (CAZymes).
+My #underline[_central hypotheses_] are
+(1) that weaning acts as a press perturbation on the infant gut ecosystem;
+(2) that the timing, magnitude, and resolution of the community's response to weaning
+explains early-life succession better than chronological age does;
+and (3) that host glycan provisioning does not cease at weaning
+but switches substrate from milk oligosaccharides to mucin,
+where it competes with dietary fiber to shape the emerging community.
+The #underline[_rationale_] for this proposal is that...
 
-*Key gap:* Existing models of infant microbiome development are indexed on chronological age.
-Whether they are machine-learning age predictors (Fahur Bottino et al., 2025; Subramanian et al., 2014)
+== Gap and hypothesis
+
+Existing models of infant microbiome development are
+monotonically indexed on chronological age.
+Whether they are machine-learning age predictors
+@fahurbottinoEarlyLifeMicrobial2025
+@subramanianPersistentGutMicrobiota2014
 or the recent generation of probabilistic longitudinal models that treat covariates
-as smooth modulators of a time trend (Cheng et al., 2019; Yuan et al., 2026),
+as smooth modulators of a time trend
+@chengAdditiveGaussianProcess2019
+@yuanLGTMGaussianProcess,
 they organize the data around age and treat diet as a nuisance covariate.
-This inverts the biology.
+While understandable from a practical methodological standpoint,
+this discards the known biology in favor of an easy-to-measure
+and easy-to-model continuous value (age).
+Further,
+these models focus on microbial taxonomic identification,
+which are proxies for metabolic function,
+but do not address metabolic function itself,
+which may cross species boundaries.
+
+I propose that the structure of the early-life gut microbiome
+contains four ecologically distinct regimes.
+The first is *assembly*, from birth through roughly the first month,
+when a near-sterile gut is colonized under conditions of high turnover and strong priority effects.
+While this state is important to understand, particularly for pre-term infants,
+it is sparsely sampled in nearly every existing cohort.
+The second structure is a *milk-adapted* quasi-stable state.
+The composition of breastmilk undergoes many changes during this period
+(indeed there is variation based on time of day
+and even from the beginning of a feed to the end of a feed),
+but the macronutrient content is relatively stable,
+and can be modeled similarly to typical diet variation.
+The third is the *weaning press*, when the resource base changes permanently.
+The weaning transition is well sampled, can be temporally placed in most cohorts,
+and is the point at which individual trajectories most plausibly begin to diverge.
+The final phase is the stable, *adult-like* state
+when milk is fully withdrawn and the gut microbiome
+settles into its long-term configuration.
+
 Succession is a response to a changing environment,
 and the largest environmental change of infancy has a measurable date.
 No framework indexes succession on the perturbation itself,
-and as a consequence we have no quantitative description of how the infant gut responds to the defining ecological event of early life,
+and as a consequence we have no quantitative description
+of how the infant gut responds to the defining ecological event of early life,
 nor of what the host contributes to the community that emerges from it.
+I propose to use the weaning transition as a natural experiment
+to characterize how the gut ecosystem responds
+to a permanent change in its resource supply,
+and to determine how that response is divided
+between host-provided and diet-provided resources.
 
-*The long-term goal of this project is to understand early-life microbial succession
-as a sequence of responses to environmental perturbation,
-rather than as an autonomous developmental clock.*
-The immediate objective is to use the weaning transition as a natural experiment
-to characterize how the gut ecosystem responds to a permanent change in its resource supply,
-and to determine how that response is divided between host-provided and diet-provided resources.
-
-*I hypothesize that the introduction of solid food acts as a press perturbation on the infant gut ecosystem;
-that the timing, magnitude, and resolution of the community's response
-explains early-life succession better than chronological age does;
-and that host glycan provisioning does not cease at weaning but switches substrate from milk oligosaccharides to mucin,
-where it competes with dietary fiber to shape the emerging community.*
-
-Ecologists distinguish a *press* perturbation, a permanent change in conditions that moves a community to a new equilibrium,
-from a *pulse*, a transient disturbance from which a community may return (Bender et al., 1984).
-The microbiome literature tends to treat all exposures alike.
-Weaning is the archetypal press:
-the resource that sustained the pioneer community is withdrawn and does not return.
-Antibiotic exposure is the archetypal pulse.
-Treating both as instances of a common framework, with distinguishable signatures,
-is the organizing idea of this program.
-
-The design insight that makes the question tractable is that weaning timing varies across infants,
-typically six months plus or minus one to two months,
-while chronological age does not.
-That natural variation decorrelates the two clocks and makes their effects separable.
-
-== 3. Research strategy
+== Research strategy
 
 My colleagues and I have assembled a databases of over 4,000 shotgun metagenomes
 from children in the first three years.
-These include the twelve-country dataset from Fahur Bottino et al. (2025),
+These include the twelve-country dataset from #cite(<fahurbottinoEarlyLifeMicrobial2025>, form: "prose"),
 additional samples from the Cape Town and Malawi arms of the Khula cohort,
 and nearly 400 samples from 300 children in a cohort
-contrasting Old Order Mennonite or urban/suburban Rochester families.
+contrasting Old Order Mennonite or urban/suburban Rochester families
+@seppoTraditionalFarmingLifestyle2021.
 Feeding status is recorded for most participants, though coarsely:
 exclusive breastfeeding, exclusive formula, or mixed, and solid foods yes or no.
-I restrict this work to shotgun metagenomes,
-which give species and gene-level resolution and avoid the substantial difficulties of reconciling amplicon data across studies.
+Shotgun metagenomes
+provide both species and gene-level resolution
+and avoid the substantial difficulties of reconciling amplicon data across studies.
 Per-individual sampling is sparse,
-so all analyses estimate population-level dynamics by pooling across children rather than fitting dynamical systems to single infants.
+so all analyses estimate population-level dynamics
+by pooling across children rather than fitting dynamical systems to single infants.
 
-=== Aim 1. Determine whether succession is governed by a developmental clock or by response to environmental transition.
+=== Aim 1. A press-perturbation model of early life microbiome composition
 
-To determine which axis organizes succession, I will fit models that decompose microbial composition
+To determine which axis organizes succession,
+I will fit models that decompose microbial composition
 into an age component and a transition-response component
 and compare their explanatory power.
 For infant *i* and taxon *j*, I will model the latent log-ratio abundance as
 
-$η_{i,j}(t) = f_j(t) + g_j(t − w_i) + b_{i,j} + ε_{i,j}(t)$
+$ η_"ij"(t) = f_j(t) + g_j(t − w_i) + b_"ij" + ε_"ij"(t) $
 
 where $t$ is chronological age,
 $w_i$ is the child's weaning time,
 $f_j$ is a shared function of age,
 $g_j$ is a shared function of time relative to the transition,
-and $b_ij$ is a subject-level random effect.
+and $b_"ij"$ is a subject-level random effect.
 In plain language: the first term asks how much of a taxon's behavior is explained by how old the child is,
 and the second asks how much is explained by how long it has been since that child started solid food.
 Because $w_i$ varies across children, the two terms are not collinear and their contributions can be separated.
@@ -245,7 +312,7 @@ A positive result identifies mucin glycan foraging as a persistent host lever on
 A negative result, in which host-glycan capacity collapses with the taxa that carried it, is equally informative,
 and would mean the post-weaning community is governed principally by diet.
 
-== 4. Future directions
+== Future directions
 
 Two limitations of the existing data define the next phase of this program,
 and I intend to use this award to generate the pilot data that makes each fundable at scale.
@@ -268,7 +335,7 @@ Aim 2 provides the entry point, by testing whether the pre-weaning state predict
 if it does, then assembly matters through a measurable channel,
 and characterizing it becomes the natural successor to this work.
 
-== 5. Expected impact
+== Expected impact
 
 This project reframes early-life microbiome development from a description of what happens when to an ecological account of why.
 If succession is best understood as a response to environmental transition, then the transition, not the calendar,
@@ -279,7 +346,7 @@ and a validated perturbation-response description of the best-characterized tran
 Framing the transition as a competition between host-provided and diet-provided resources also connects population-scale metagenomics to the evolutionary question of what the host is selecting for,
 and to the experimental work on infant-associated microbial physiology that my lab is pursuing in parallel.
 
-== 6. Personal significance
+== Personal significance
 
 *[Placeholder. Threads to draw on: I am the father of two children, both delivered by cesarean section, one with eczema,
 and like all parents we struggled to know what was best for them at exactly the moments this proposal studies.
