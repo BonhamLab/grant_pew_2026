@@ -1,6 +1,6 @@
 #set page(paper:"us-letter", margin:1in, numbering: "1")
 //double spacing
-#set text(12pt, top-edge: 0.7em, bottom-edge: -0.3em)
+#set text(12pt, font: "Liberation Serif", top-edge: 0.7em, bottom-edge: -0.3em)
 #set par(leading: 1em, first-line-indent: 2em)
 
 == Background and significance
@@ -260,23 +260,14 @@ I will quantify each component's contribution by variance attribution
 @yuanLGTMGaussianProcess
 and compare the age-only, two-press, and press-only models
 by held-out predictive performance.
-
-*Weaning is a transition, not a step.*
-Breastfeeding is typically reduced over weeks to months rather than stopped at once.
-Where cohorts record feeding intensity across visits
-(exclusive, then partial, then none),
+Because weaning typically takes place over weeks to months rather all at once.
 I will model each $g$ as a smooth response with a latent onset _and_ a duration,
 so that the ramp is estimated rather than assumed instantaneous.
-Where only a binary flag is recorded, the model recovers onset bounds but not duration,
-and I will report the resulting resolution limit rather than over-interpret it.
 
-*The transition times are latent, and inferring them is the core of the method.*
 Most cohorts do not record the exact date of milk cessation or solid introduction.
-They record, at each visit, whether each has yet occurred.
-Because the flags are monotone, each event is interval-censored:
-it lies between the last visit flagged "no" and the first flagged "yes".
-Substituting the interval midpoint would inject error into the covariate
-and bias the model toward the age explanation for a methodological reason.
+Instead, they record whether each has yet occurred at each visit.
+Because the flags are monotone, each event is interval-censored,
+meaning it lies between the last visit flagged "no" and the first flagged "yes".
 To determine each infant's transition times,
 I will treat $m_i$ and $s_i$ as latent variables,
 place priors on them drawn from the population distribution of weaning times
@@ -288,16 +279,14 @@ while each transition time is a single scalar constrained by hard bounds.
 Infants whose sampling brackets a transition tightly pin down the alignment of $g$,
 and that shared $g$ then localizes the transition for infants sampled more sparsely.
 
-This design turns the coarse metadata into the sharpest available test of the hypothesis.
 If succession is a response to the presses,
 composition must carry information about how long it has been since each one,
 and the model should date the transitions from composition alone
 more precisely than the censoring interval allows.
-An age clock has no reason to do this.
+An age-based clock has no reason to do this.
 // This is the falsification criterion.
 If the model cannot localize the transition times within their intervals
-better than the prior, that is evidence against the hypothesis, not a technical failure,
-and I will report it as such.
+better than the prior, that is evidence against the hypothesis rather than a technical failure.
 I will validate the inference by simulation-based calibration
 [CITE: simulation-based calibration, Talts et al. 2018]
 and by holding out tightly bracketed infants, hiding their bounds, and testing recovery.
@@ -329,8 +318,8 @@ It is deliberately modest and is not the evidence on which the aim's conclusions
 since its sampling matures late in the award period.
 ]
 
-*Expected outcomes.*
-A quantitative answer to whether age or the presses better explain succession,
+This work is expected to generate
+a quantitative answer to whether age or the presses better explain succession,
 a shared response function for each major taxon relative to each press,
 and a calibrated method for placing an individual infant on the succession trajectory
 from sparse samples.
@@ -340,25 +329,24 @@ If milk cessation and solid introduction prove statistically inseparable in this
 the single-press model remains valid and still improves on the age clock.
 If the compositional model is computationally prohibitive at this sample size,
 I will use a basis-function approximation to the Gaussian process
-[CITE: Hilbert-space reduced-rank GP approximation],
 which scales linearly in the number of samples and is the approach taken by
 recent longitudinal microbiome models @yuanLGTMGaussianProcess.
 
-== Aim 2: Glycan utilization as the mediator of the compositional response
+== Aim 2: Characterizing glycan utilization as a mediator of compositional response
 
-Aim 1 describes _what_ happens to the community at each press.
-Aim 2 tests _why_, at the level of the resource each press changes.
-The presses are defined by glycans:
-milk cessation withdraws HMOs, and solid food adds plant fiber.
+While Aim 1 is focused on _what_ happens to the community at each press,
+Aim 2 tests _why_, in terms of a major resource altered by them.
+I propose that the weaning presses are defined by glycans,
+specifically HMOs and plant fiber.
 If these resources drive the compositional response,
 then the community's glycan-foraging gene content should change with each press
-in a substrate-specific way, and should do so whether or not the carrying taxa persist.
+in a substrate-specific way, and should do independent of which taxa carry them.
 Because the dietary metadata is too coarse to quantify intake,
 I will read the resource environment off the community's own gene content,
 which is a more direct measure of what the community can consume than any questionnaire.
 
-*Hypothesis.*
-I hypothesize that the compositional response to each press is mediated by the change
+My #underline[_central hypothesis_] for this aim is that
+the compositional response to each press is mediated by the change
 in its corresponding glycan resource,
 and specifically that host glycan provisioning does not cease at milk withdrawal
 but switches substrate from milk oligosaccharides to mucin,
@@ -384,7 +372,6 @@ To determine whether each press acts through its own glycan resource,
 I will align each functional module to each press using the transition times from Aim 1
 and test whether the host-glycan module responds to milk cessation
 and the plant-glycan module responds to solid introduction.
-
 To determine whether host provisioning persists across milk withdrawal,
 I will test whether taxonomic turnover across the milk-cessation press
 exceeds functional turnover in the host-glycan module.
