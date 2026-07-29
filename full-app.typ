@@ -42,7 +42,7 @@ Despite this clear importance,
 attempts to understand the relationships between microbiome composition
 in the first year of list and host development
 remain beset by the persistent challenge that
-the microbial population itself is in constant flux during this period.
+the microbial population _itself_ is in constant flux during this period.
 Though we showed that age predicts the microbiome remarkably well,
 the performance of our models were in large part driven
 by a single extreme shift in composition that occurs around six months of age
@@ -89,23 +89,16 @@ from a "pulse perturbation", a transient disturbance from which a community may 
 @benderPerturbationExperimentsCommunity1984.
 Where the microbiome literature treats perturbations at all,
 it tends to treat all exposures alike.
-Weaning is an archetypal press:
-the resource that sustained the pioneer community is withdrawn and does not return,
-while at the same time new resources (and news sources of dispersal) are introduced.
-Other clinically relevant press perturbations such as the onset of chronic disease
+An ecological model, in addition to providing a higher-fidelity
+model of the critical early microbome assembly,
+may be extended to 
+other clinically relevant press perturbations such as the onset of chronic disease
 or long-term treatments such as statins or GLP-1 drugs
 may alter metabolism and immune posture in ways that 
 affect gut microbial composition
 @maierExtensiveImpactNonantibiotic2018
 @thompsonAlterationsGutMicrobiome2023,
-but modeling these effects is substantially more challenging,
-since microbes may be both cause and effect,
-effects of the perturbation are less dramatic 
-and take place over a longer time period,
-and treatments and diseases may confound one another in the signal.
-Antibiotics and acute illness are examples of pulse perturbations,
-and may also benefit from an ecological lens,
-but are beyond the scope of this proposal.
+and extended to pulse perturbations such as antibiotic use.
 
 My #underline([_long term goal_]) is to understand the changing early-life
 microbiome in ecological terms,
@@ -122,11 +115,10 @@ explains early-life succession better than chronological age does;
 and (3) that host glycan provisioning does not cease at weaning
 but switches substrate from milk oligosaccharides to mucin,
 where it competes with dietary fiber to shape the emerging community.
-The #underline[_rationale_] for this proposal is that...
 
-*Gap and hypothesis*:
+*Gap:*
 Existing models of infant microbiome development are
-monotonically indexed on chronological age.
+indexed on chronological age.
 Whether they are machine-learning age predictors
 @fahurbottinoEarlyLifeMicrobial2025
 @subramanianPersistentGutMicrobiota2014
@@ -135,47 +127,24 @@ as smooth modulators of a time trend
 @chengAdditiveGaussianProcess2019
 @yuanLGTMGaussianProcess,
 they organize the data around age and treat diet as a nuisance covariate.
-While understandable from a practical methodological standpoint,
-this discards the known biology in favor of an easy-to-measure
+This discards the known biology in favor of an easy-to-measure
 and easy-to-model continuous value (age).
 Further,
 these models focus on microbial taxonomic identification,
 which are proxies for metabolic function,
 but do not address metabolic function itself,
 which may cross species boundaries.
-
-I propose that the structure of the early-life gut microbiome
-contains four ecologically distinct regimes.
-The first is *assembly*, from birth through roughly the first month,
-when a near-sterile gut is colonized under conditions of high turnover and strong priority effects.
-While this state is important to understand, particularly for pre-term infants,
-it is sparsely sampled in nearly every existing cohort.
-The second structure is a *milk-adapted* quasi-stable state.
-The composition of breastmilk undergoes many changes during this period
-(indeed there is variation based on time of day
-and even from the beginning of a feed to the end of a feed),
-but the macronutrient content is relatively stable,
-and can be modeled similarly to typical diet variation.
-The third is the *weaning press*, when the resource base changes permanently.
-The weaning transition is well sampled, can be temporally placed in most cohorts,
-and is the point at which individual trajectories most plausibly begin to diverge.
-The final phase is the stable, *adult-like* state
-when milk is fully withdrawn and the gut microbiome
-settles into its long-term configuration.
-
-No existing framework indexes succession on the perturbation itself,
+No existing framework indexes succession on perturbations themselves,
 and as a consequence we have no quantitative description
-of how the infant gut responds to the defining ecological event of early life,
-nor of what the host contributes to the community that emerges from it.
-_I propose to use the weaning transition as a natural experiment
-to characterize how the gut ecosystem responds
+of how the infant gut responds to the defining ecological event of early life.
+_I propose to use the weaning transition to characterize how the gut ecosystem responds
 to a permanent change in its resource supply,
 and to determine how that response is divided
 between host-provided and diet-provided resources._
 
 == Research strategy
 
-My colleagues and I have assembled a databases of over 4,000 shotgun metagenomes
+We have assembled a databases of over 4,000 shotgun metagenomes
 from children in the first three years.
 These include the twelve-country dataset from #cite(<fahurbottinoEarlyLifeMicrobial2025>, form: "prose"),
 additional samples from the Cape Town and Malawi arms of the Khula cohort,
@@ -183,8 +152,7 @@ and nearly 400 samples from 300 children in a cohort
 contrasting Old Order Mennonite or urban/suburban Rochester families
 @seppoTraditionalFarmingLifestyle2021.
 Feeding status is recorded for most participants,
-and shotgun metagenomes
-provide both species and gene-level resolution.
+and metagenomes provide both species and gene-level resolution.
 
 === Aim 1: A two-press perturbation model of normative infant microbiome succession
 
@@ -273,15 +241,7 @@ and by holding out tightly bracketed infants, hiding their bounds, and testing r
 The two response functions can be told apart only because milk cessation and
 solid introduction do not always coincide.
 Early formula-switchers and infants with extended breastfeeding alongside early solids
-provide the discordant timing that powers the separation.
-Whether the data can support a two-press model is therefore an empirical question
-I can answer before fitting:
-I will quantify, across the roughly 4,000 metagenomes in hand,
-how many infants have discordant transition timing.
-// Feasibility check; belongs in preliminary data.
-If the great majority wean both axes together near six months,
-I will report the two-press model as identifiable only for the taxa with the
-strongest signals and fall back to a single weaning press for the remainder.
+provide discordant timing that powers the separation.
 
 *Prospective validation (pilot).*
 The retrospective cohorts contain the timing dissociation but not dense sampling
@@ -298,8 +258,7 @@ but will be deliberately modest and is not expected to.
 This work is expected to generate
 a quantitative answer to whether age or the presses better explain succession,
 a shared response function for each major taxon relative to each press,
-and a calibrated method for placing an individual infant on the succession trajectory
-from sparse samples.
+and a calibrated method for placing an individual infant on the succession trajectory.
 
 *Potential problems and alternatives.*
 If milk cessation and solid introduction prove statistically inseparable in this dataset,
@@ -315,13 +274,10 @@ While Aim 1 is focused on _what_ happens to the community at each press,
 Aim 2 tests _why_, in terms of a major resource altered by them.
 My #underline[_central hypothesis_] for this aim is that
 the compositional response to each press is mediated by the change
-in its corresponding glycan resource, HMOs (breastfeeding) or dietary fiber (plants),
-where it competes with dietary fiber to shape the emerging community.
+in its corresponding glycan resource, HMOs (breastfeeding) or dietary fiber (plants).
 If these resources drive the compositional response,
 then the community's glycan-foraging gene content should change with each press
 in a substrate-specific way, and should do independent of which taxa carry them.
-Because the dietary metadata is too coarse to quantify intake,
-I will read the resource environment off the community's gene content directly.
 
 *Approach.*
 I will partition the carbohydrate-active enzyme (CAZyme) repertoire quantified
@@ -349,18 +305,6 @@ I will test whether taxonomic turnover across the milk-cessation press
 exceeds functional turnover in the host-glycan module.
 If the host continues to feed its microbiome through mucin,
 host-glycan foraging capacity should outlive the taxa that carried it before the press.
-
-*Natural experiments dissociate the two resources.*
-Infants who switch from exclusive breastmilk to formula experience
-withdrawal of (most) HMOs without the addition of fiber.
-Likewise, most infants begin solids while breastfeeding continues
-and experience the addition of fiber without withdrawal of HMOs.
-I will use these subgroups to test whether each resource change moves
-glycan-foraging capacity and composition in the predicted, dissociable directions.
-Dome modern formulas are supplemented with HMOs
-such as 2'-fucosyllactose,
-so I will restrict this analysis to infants whose formula composition is known
-or predates widespread supplementation.
 
 *Expected outcomes:*
 Evidence for or against the proposition that host glycan provisioning persists past weaning,
