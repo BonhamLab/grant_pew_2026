@@ -1,3 +1,5 @@
+#import "@preview/meander:0.4.2"
+
 #set page(paper:"us-letter", margin:1in, numbering: "1")
 //double spacing
 #set text(12pt, font: "Liberation Serif", top-edge: 0.7em, bottom-edge: -0.3em)
@@ -7,6 +9,26 @@
   set text(weight: "regular")
   underline(emph(it))
 } 
+
+#show figure.where(kind: table): set figure.caption(position: top)
+#show figure.caption: c=> [
+  #set text(8pt)
+  #set align(left)
+  #set par(leading: 0.2em)
+
+  #text(weight: "bold", font: "Noto Serif")[
+    #smallcaps[
+      #c.supplement #c.counter.display(c.numbering)
+    ]
+  ]
+  #c.separator#c.body
+]
+#set figure(gap: 0.2em)
+#show image: it=>{
+  block(stroke: 0.5pt+gray, inset:2pt, it)
+}
+
+
 == Background and significance
 
 The gut microbiome assembles over the first years of life
@@ -55,9 +77,27 @@ As a consequence, longitudinal models of the microbiome that treat
 composition as linear or even monotonic without accounting
 for this profound ecological shift are incomplete.
 
-#figure([Figure placeholder - graphical depiction of transition])<fig-milkprepost>
+#meander.reflow({
+  import meander: *
 
-Ecologists distinguish a "press perturbation",
+  container(width: 46%)
+  container()
+
+  content[#box(width:40%)[
+      
+#figure(image("assets/press_schema.svg"),
+  caption: [
+    Schematic of diet- and mucin- derrived glycans available to feed the microbiome
+    in breastfed infants.
+    The press perturbation is primarily defined by the shift from dietary HMO
+    from breastmilk to plant-derived fiber.
+    Mucin composition and abundance also changes, but this change is less dramatic.
+  ])<fig-milkprepost>]]
+
+      colbreak()
+
+    content[
+      Ecologists distinguish a "press perturbation",
 a permanent change in conditions that moves a community to a new equilibrium,
 from a "pulse perturbation", a transient disturbance from which a community may return
 @benderPerturbationExperimentsCommunity1984.
@@ -87,6 +127,9 @@ with a different set of beneficiaries,
 shaping the ecology of succession and
 the resulting composition of the gut into adulthood.
 
+
+    ]
+})
 My #underline([_long term goal_]) is to understand the changing early-life
 microbiome in ecological terms,
 and use that understanding to investigate the interactions between
