@@ -1,0 +1,25 @@
+
+
+```{julia}
+using DataFrames
+using CSV
+using CairoMakie
+```
+
+```{julia}
+zoom = CSV.read("ZOOM1_Stool_Sample_Metadata_7.1.26.csv", DataFrame)
+allc = CSV.read("metadata_export.csv", DataFrame)
+```
+
+
+```{julia}
+for col in ["exclusive_breastfeeding", "some_breastfeeding", "formula_feeding"]
+    zoom[!, col] = Bool.(zoom[!, col])
+end
+```
+
+```{julia}
+```
+
+
+
