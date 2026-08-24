@@ -135,7 +135,7 @@ the resulting composition of the gut into adulthood.
 })
 
 
-My #underline([_long term goal_]) is to understand the changing early-life
+#h(2em)My #underline([_long-term goal_]) is to understand the changing early-life
 microbiome in ecological terms,
 and use that understanding to investigate the interactions between
 microbiome composition and child development.
@@ -148,7 +148,7 @@ My #underline[_central hypotheses_] are
 (2) that the timing, magnitude, and resolution of the community's response to weaning
 explains early-life succession better than chronological age does;
 and (3) that host glycan provisioning does not cease at weaning
-but switches substrate from milk oligosaccharides to mucin,
+but switches substrate from milk to mucin,
 where it competes with dietary fiber to shape the emerging community.
 An ecological press-perturbation model, in addition to providing a higher-fidelity
 model of the critical early microbome assembly,
@@ -356,7 +356,7 @@ press perturbation and pulse perturbation model with relevance throughout life
 as dietary change, migration, antibiotics, and disease, shape and are shaped by microbial communities.
 A validated perturbation-response description
 // Not best characterized - it's the GAP
-of the best-characterized transition in human life provides a template for the rest.
+of the most universal ecological transition in human life provides a template for the rest.
 Framing the transition as a competition
 between host-provided and diet-provided resources
 also connects population-scale metagenomics to the evolutionary question of what the host is selecting for,
