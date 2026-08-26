@@ -92,9 +92,9 @@ by a single extreme shift in composition around six months of age
 coinciding with the end of exclusive milk feeding and the introduction of solid food
 @stewartTemporalDevelopmentGut2018
 (@fig-milkprepost).
-As a consequence, longitudinal models of the microbiome that treat
+Longitudinal models of the microbiome that treat
 composition as linear or even monotonic without accounting
-for this profound ecological shift are incomplete.
+for this profound ecological shift are, therefore, incomplete.
 
 Ecologists distinguish a "press perturbation",
 a permanent change in conditions that moves a community to a new equilibrium,
@@ -102,8 +102,8 @@ from a "pulse perturbation", a transient disturbance from which a community may 
 @benderPerturbationExperimentsCommunity1984.
 Weaning is a clear example of a press perturbation,
 permanently changing the gut's resource supply along two axes:
-an *intrinsic* change supplied by the host, as HMO provisioning is removed,
-and an *extrinsic* change supplied by diet,
+(1) an *intrinsic* change supplied by the host, as HMO provisioning is removed,
+and (2) an *extrinsic* change supplied by diet,
 the introduction of plant polysaccharides,
 particularly dietary fiber @makkiImpactDietaryFiber2018.
 Yet despite the loss of HMOs,
@@ -167,9 +167,6 @@ as smooth modulators of a time trend
 @chengAdditiveGaussianProcess2019
 @yuanLGTMGaussianProcess,
 they organize the data around age and treat diet as a nuisance covariate.
-They also focus on taxonomic identity,
-a proxy for metabolic function that does not address function itself,
-which may cross species boundaries.
 No existing framework indexes succession on perturbations themselves,
 and as a consequence we have no quantitative description
 of how the infant gut responds to the defining ecological event of early life.
@@ -180,9 +177,7 @@ from children in the first three years of life:
 (1) the twelve-country dataset from #cite(<fahurbottinoEarlyLifeMicrobial2025>, form: "prose"),
 nearly 3,200 samples from 1,800 infants spanning the globe;
 (2) samples from the Cape Town and Malawi arms of the Khula cohort,
-which I helped collect;
-(3) hundreds of samples from studies released in the past two years;
-and (4) nearly 400 samples from 300 children
+and (3) nearly 400 samples from 300 children
 contrasting Old Order Mennonite and urban/suburban Rochester families
 @seppoTraditionalFarmingLifestyle2021.
 Feeding status is recorded for most participants,
@@ -290,7 +285,7 @@ acts through its own glycan resource,
 I will align each module to each component using the transition times from Aim 1
 and test whether the host-glycan module responds to milk cessation
 and the plant-glycan module to solid introduction.
-To test whether host provisioning persists across milk withdrawal,
+To test whether host provisioning persists,
 I will ask whether taxonomic turnover across the milk-cessation press
 exceeds functional turnover in the host-glycan module:
 if the host keeps feeding its microbiome through mucin,
@@ -329,9 +324,6 @@ may alter the microbiome in important ways,
 while pulse perturbations such as antibiotic exposure
 disrupt it with health implications during development
 and may require a different modeling approach.
-A further open question is how the microbiome is seeded in the first place,
-both the source of microbes
-and the shaping of the ecosystem that lets them flourish.
 
 *Expected impact*:
 This project will provide a quantitative ecological account
@@ -343,10 +335,9 @@ shape and are shaped by microbial communities.
 A validated perturbation-response description
 // Not best characterized - it's the GAP
 of the most universal ecological transition in human life provides a template for the rest.
-Framing that transition as a competition
+Framing it as a competition
 between host- and diet-provided resources
-also connects population-scale metagenomics to the evolutionary question
-of what the host is selecting for,
+also connects to an evolutionary framework
 and to the experimental work on infant-associated microbial physiology
 my lab is pursuing in parallel.
 
