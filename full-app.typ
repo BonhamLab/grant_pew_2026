@@ -8,7 +8,7 @@
 #set par(leading: 1em, first-line-indent: 2em)
 #show heading.where(level: 2): set text(12pt, weight: "bold")
 #show heading.where(level: 3): it=>{
-  set text(weight: "regular")
+  set text(12pt, weight: "regular")
   underline(emph(it))
 } 
 
@@ -75,8 +75,8 @@ to within about 2.5 months
 We also showed that the species present in the first six months of life
 and the neuroactive gene products they encode
 are associated with cognitive development,
-brain morphology by MRI,
-and maturation of visual neural circuitry by EEG
+brain morphology measured with MRI,
+and maturation of visual neural circuitry as measured by EEG
 @bonhamGutresidentMicroorganismsTheir2023
 @bonhamCodevelopmentGutMicrobial2025.
 
@@ -85,7 +85,7 @@ efforts to relate early-life microbiome composition to host development
 are beset by the fact that
 the microbial population _itself_ is in constant flux during this period.
 Though age predicts the microbiome remarkably well,
-our models' performance was largely driven
+our model's performance was largely driven
 by a single extreme shift in composition around six months of age
 // Add figure w/proportion of taxa present at 3 months that are still present at 1 year
 // Or: curves of most age-specific taxa
@@ -96,7 +96,7 @@ Longitudinal models of the microbiome that treat
 composition as linear or even monotonic without accounting
 for this profound ecological shift are, therefore, incomplete.
 
-Ecologists distinguish a "press perturbation",
+#h(2em)Ecologists distinguish a "press perturbation",
 a permanent change in conditions that moves a community to a new equilibrium,
 from a "pulse perturbation", a transient disturbance from which a community may return
 @benderPerturbationExperimentsCommunity1984.
@@ -104,7 +104,7 @@ Weaning is a clear example of a press perturbation,
 permanently changing the gut's resource supply along two axes:
 (1) an *intrinsic* change supplied by the host, as HMO provisioning is removed,
 and (2) an *extrinsic* change supplied by diet,
-the introduction of plant polysaccharides,
+with the introduction of plant polysaccharides and
 particularly dietary fiber @makkiImpactDietaryFiber2018.
 Yet despite the loss of HMOs,
 other host-provided glycans may continue to feed and shape the microbiome.
@@ -150,8 +150,8 @@ An ecological press-perturbation model, in addition to providing a higher-fideli
 model of the critical early microbome assembly,
 may be extended to
 other clinically relevant press perturbations such as the onset of chronic disease
-or long-term treatments such as statins or GLP-1 drugs
-may alter metabolism and immune posture in ways that 
+or long-term treatments such as statins or GLP-1 drugs,
+which may alter metabolism and immune posture in ways that 
 affect gut microbial composition
 @maierExtensiveImpactNonantibiotic2018
 @thompsonAlterationsGutMicrobiome2023.
@@ -166,13 +166,13 @@ or probabilistic longitudinal models that treat covariates
 as smooth modulators of a time trend
 @chengAdditiveGaussianProcess2019
 @yuanLGTMGaussianProcess,
-they organize the data around age and treat diet as a nuisance covariate.
+they organize the data around age and treat diet as a covariate to control for.
 No existing framework indexes succession on perturbations themselves,
 and as a consequence we have no quantitative description
 of how the infant gut responds to the defining ecological event of early life.
 
 == Research strategy
-I have assembled a database of over 5,000 shotgun metagenomes
+We have assembled a database of over 5,000 shotgun metagenomes
 from children in the first three years of life:
 (1) the twelve-country dataset from #cite(<fahurbottinoEarlyLifeMicrobial2025>, form: "prose"),
 nearly 3,200 samples from 1,800 infants spanning the globe;
@@ -188,14 +188,14 @@ Weaning consists of two mechanistically distinct but typically concurrent pertur
 (1) the cessation of breastmilk and (2) the introduction of solid food.
 Crucially, differences in the timing of these two events across infants
 provide natural experiments for modeling succession as their joint response.
-Infants who switch from breastfeeding to formula before starting solids
+For example, infants who switch from breastfeeding to formula before starting solids
 reduce HMO consumption without adding plant fiber,
 while infants weaning from exclusive formula gain dietary fiber
 without a major loss of HMOs.
 
 My #underline([central hypothesis]) is that time relative to each press perturbation
 explains normative taxonomic succession better than chronological age does,
-and that the two have distinct taxonomic signatures.
+and that the two have distinct taxonomic and gene-function signatures.
 To test this, I will fit models that decompose composition
 into an age component and two transition-response components
 and compare their explanatory power.
@@ -244,7 +244,7 @@ and the Women, Mother + Baby (WoMB) institute at Tufts Medical Center,
 sampled monthly through the weaning window, with dietary assessment
 and quantification of milk and fecal glycans.
 This will help calibrate the model and seed a larger study,
-but is deliberately modest and not expected to complete within this program.
+but is deliberately modest and not expected to stand alone.
 
 *Expected outcomes:*
 This work is expected to generate
@@ -267,7 +267,7 @@ the compositional response to each weaning press perturbation is mediated
 by the change in its corresponding glycan resource,
 HMOs (breastfeeding) or dietary fiber (plants).
 If these resources drive composition,
-glycan-foraging gene content should change with each press
+the glycan-foraging gene content of the community should change with each press
 in a substrate-specific way, independent of which taxa carry it.
 
 *Approach:*
@@ -334,7 +334,8 @@ as dietary change, migration, antibiotics, and disease
 shape and are shaped by microbial communities.
 A validated perturbation-response description
 // Not best characterized - it's the GAP
-of the most universal ecological transition in human life provides a template for the rest.
+of the most universal ecological transition in human life will provides a template approach 
+for other, less common events.
 Framing it as a competition
 between host- and diet-provided resources
 also connects to an evolutionary framework
