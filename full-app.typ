@@ -37,7 +37,7 @@
     box(width: 39%)[
       #figure(image("assets/press_schema.svg"),
         caption: [
-          Schematic of diet- and mucin- derrived glycans available to feed the microbiome
+          Schematic of diet- and mucin- derived glycans available to feed the microbiome
           in breastfed infants.
           The press perturbation is primarily defined by the shift from dietary HMO
           from breastmilk to plant-derived fiber.
@@ -55,7 +55,7 @@
 The gut microbiome assembles over the first years of life
 through a chaotic but predictable ecological succession.
 Pioneer colonizers arrive at birth,
-expand under the selective pressure of a liquid diet (milk or forumla),
+expand under the selective pressure of a liquid diet (milk or formula),
 and are progressively replaced by a more diverse, adult-like community.
 There is clear evolutionary evidence that the early microbiome
 is important for infant health.
@@ -175,7 +175,7 @@ of how the infant gut responds to the defining ecological event of early life.
 We have assembled a database of over 5,000 shotgun metagenomes
 from children in the first three years of life:
 (1) the twelve-country dataset from #cite(<fahurbottinoEarlyLifeMicrobial2025>, form: "prose"),
-nearly 3,200 samples from 1,800 infants spanning the globe;
+nearly 3,200 samples from more than 1,800 infants spanning the globe;
 (2) samples from the Cape Town and Malawi arms of the Khula cohort,
 and (3) nearly 400 samples from 300 children
 contrasting Old Order Mennonite and urban/suburban Rochester families
@@ -216,7 +216,7 @@ by how old the child is; the $h_i (t) dot c_j$ term captures how the milk-adapte
 is shaped by ongoing exposure to human milk oligosaccharides,
 which distinguishes breastfed from formula-fed infants before any weaning;
 and the last two ask how much is explained by
-how long it has been since that child stopped milk and started solids respectively.
+how long it has been since that child stopped milk and started solids, respectively.
 
 I will implement the shared functions as additive Gaussian processes
 over each time axis
@@ -238,7 +238,7 @@ and standard train/test methods.
 *Prospective validation (pilot):*
 The retrospective cohorts contain the timing dissociation but not dense sampling
 through the transition, nor direct measurement of HMO and fiber intake.
-To establish ground-truth for model parameters,
+To establish ground truth for model parameters,
 I will run a small pilot cohort with the Friedman School of Nutrition Science and Policy
 and the Women, Mother + Baby (WoMB) institute at Tufts Medical Center,
 sampled monthly through the weaning window, with dietary assessment
@@ -247,8 +247,8 @@ This will help calibrate the model and seed a larger study,
 but is deliberately modest and not expected to stand alone.
 
 *Expected outcomes:*
-This work is expected to generate
-a quantitative answer to whether age or ecology better explain succession,
+This work is expected to provide
+a quantitative answer to whether age or ecology better explains succession,
 shared response functions for each major taxon relative to each press,
 and a calibrated method for modeling individual infants' succession trajectory.
 *Potential problems and alternatives:*
@@ -280,7 +280,7 @@ and a plant-glycan module
 //GH51 arabinofuranosidases, and pectate lyases),
 using the CAZy database
 @zhengDbCAN3AutomatedCarbohydrateactive2023.
-To test whether each component of weaning (HMO withdrawal, solid food)
+To test whether each component of weaning (HMO withdrawal, adding solid food)
 acts through its own glycan resource,
 I will align each module to each component using the transition times from Aim 1
 and test whether the host-glycan module responds to milk cessation
@@ -322,19 +322,18 @@ other press perturbations such as chronic disease onset,
 dietary change, or long-term medication use
 may alter the microbiome in important ways,
 while pulse perturbations such as antibiotic exposure
-disrupt it with health implications during development
-and may require a different modeling approach.
+disrupt it transiently and may require a different modeling approach.
 
 *Expected impact*:
 This project will provide a quantitative ecological account
 of an early and consequential microbiome perturbation,
 forming the foundation for a generalizable
-press- and pulse-perturbation model with relevance throughout life,
+press- and pulse- perturbation model with relevance throughout life,
 as dietary change, migration, antibiotics, and disease
 shape and are shaped by microbial communities.
 A validated perturbation-response description
 // Not best characterized - it's the GAP
-of the most universal ecological transition in human life will provides a template approach 
+of the most universal ecological transition in human life will provide a template approach 
 for other, less common events.
 Framing it as a competition
 between host- and diet-provided resources
